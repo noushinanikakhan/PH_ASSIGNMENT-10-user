@@ -22,14 +22,18 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Logo and Title - Perfectly Horizontally Aligned */}
-      <div className="flex items-center flex-shrink-0 mx-auto lg:mx-0">
-        <img src={logo} className="h-[100px] w-[100px] object-contain" alt="PlateShare Logo" />
-        <div className="flex flex-col justify-center border-l border-[#83b541] pl-4">
-          <h2 className="font-bold text-3xl text-white leading-tight">PlateShare</h2>
-          <p className="text-white text-base mt-1 leading-tight">Meals with Meaning</p>
-        </div>
-      </div>
+     {/* Logo and Title - Perfectly Horizontally Aligned */}
+<div className="flex items-center flex-shrink-0 mx-auto lg:mx-0">
+  <img
+    src={logo}
+    className="h-16 w-16 sm:h-20 sm:w-20 lg:h-[120px] lg:w-[120px] pt-2 lg:pt-6 object-contain"
+    alt="PlateShare Logo"
+  />
+  <div className="flex flex-col justify-center border-l border-[#83b541] pl-3">
+    <h2 className="font-bold text-xl sm:text-2xl lg:text-3xl text-white leading-tight">PlateShare</h2>
+    <p className="text-white text-sm sm:text-base mt-0.5 leading-tight">Meals with Meaning</p>
+  </div>
+</div>
 
       {/* Desktop Navigation */}
       <div className="hidden lg:flex flex-1 justify-center">
@@ -43,7 +47,12 @@ const Navbar = () => {
 
       {/* Login Button and Desktop Right Side */}
       <div className="flex items-center gap-4">
-        <a className="btn bg-[#83b541] hover:bg-[#6f9a37] text-white border-none rounded-3xl px-8 text-lg hidden sm:inline-flex">Log In</a>
+       <a
+  className="btn bg-[#83b541] hover:bg-[#6f9a37] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-lg hidden sm:inline-flex shadow-none"
+>
+  Log In
+</a>
+
         
         {/* This empty div maintains space balance on mobile */}
         <div className="w-10 lg:hidden"></div>
