@@ -1,7 +1,24 @@
-import React from "react";
+import React, { use } from "react";
 import logo from "./../../assets/Platefoodlogo.png"
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
+
+
+    const { user, logout } = use(AuthContext);
+    const navigate = useNavigate ();
+
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+                navigate('/');
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+            });
+    };
+
    return (
     <nav className="flex items-center justify-between bg-[#0c2729] shadow-sm px-4 py-3">
       {/* Mobile Menu - Now on Left Side */}
@@ -13,11 +30,21 @@ const Navbar = () => {
             </svg>
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content bg-[#0c2729] rounded-box z-50 mt-2 w-52 p-2 shadow">
-            <li><a className="text-white hover:bg-[#83b541]">Home</a></li>
-            <li><a className="text-white hover:bg-[#83b541]">Available Foods</a></li>
-            <li><a className="text-white hover:bg-[#83b541]">About Us</a></li>
-            <li><a className="text-white hover:bg-[#83b541]">Contact</a></li>
-            <li><a className="text-white hover:bg-[#83b541]">Log In</a></li>
+
+       <li> <Link to="/" className="text-white hover:text-[#83b541]">Home</Link></li>
+            <li>
+              <Link to="/availablefoods" className="text-white hover:text-[#83b541]">Available Foods</Link>
+            </li>
+            <li>
+              <Link to="/addfoods" className="text-white hover:bg-[#83b541]">Add Foods</Link>
+            </li>
+               <li>
+              <Link to="/managemyfoods" className="text-white hover:text-[#83b541]">Manage My Foods</Link>
+            </li>
+               <li>
+              <Link to="/myfoodrequests" className="text-white hover:text-[#83b541]">My Food Requests</Link>
+            </li>
+      
           </ul>
         </div>
       </div>
@@ -38,24 +65,61 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       <div className="hidden lg:flex flex-1 justify-center">
         <ul className="flex items-center gap-8 text-white text-lg">
-          <li><a className="hover:text-[#83b541] transition-colors duration-200">Home</a></li>
-          <li><a className="hover:text-[#83b541] transition-colors duration-200">Available Foods</a></li>
-          <li><a className="hover:text-[#83b541] transition-colors duration-200">About Us</a></li>
-          <li><a className="hover:text-[#83b541] transition-colors duration-200">Contact</a></li>
+           <li> <Link to="/" className="text-white hover:text-[#83b541]">Home</Link></li>
+            <li>
+              <Link to="/availablefoods" className="text-white hover:text-[#83b541]">Available Foods</Link>
+            </li>
+
+              {/* User Profile Dropdown */}
+    {user && (
+      <li className="dropdown  dropdown-end">
+        <div tabIndex={0} role="button" className="flex items-center gap-2 hover:text-[#83b541] cursor-pointer">
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <img 
+              src={user.photoURL || "https://via.placeholder.com/32"} 
+              alt={user.displayName || "User"} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span>{user.displayName || "User"}</span>
+        </div>
+        <ul tabIndex={0} className="dropdown-content menu bg-[#0c2729] rounded-box z-50 mt-4 w-52 p-2 shadow">
+          {/* <li className="px-4 py-2 text-white border-b border-gray-600">
+            <span className="text-sm">Hello, {user.displayName || "User"}</span>
+          </li> */}
+          <li><Link to="/addfoods" className="text-white hover:bg-[#83b541]">Add Food</Link></li>
+          <li><Link to="/managemyfoods" className="text-white hover:bg-[#83b541]">Manage My Foods</Link></li>
+          <li><Link to="/myfoodrequests" className="text-white hover:bg-[#83b541]">My Food Requests</Link></li>
+          <li><button onClick={handleLogout} className="text-white hover:bg-[#83b541] text-left">Logout</button></li>
+        </ul>
+      </li>
+    )}
+
+
+
+
+            {/* <li>
+              <Link to="/addfoods" className="text-white hover:text-[#83b541]">Add Foods</Link>
+            </li>
+               <li>
+              <Link to="/managemyfoods" className="text-white hover:text-[#83b541]">Manage My Foods</Link>
+            </li>
+               <li>
+              <Link to="/myfoodrequests" className="text-white hover:text-[#83b541]">My Food Requests</Link>
+            </li> */}
+   
         </ul>
       </div>
 
       {/* Login Button and Desktop Right Side */}
       <div className="flex items-center gap-4">
-       <a
-  className="btn bg-[#83b541] hover:bg-[#6f9a37] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-lg hidden sm:inline-flex shadow-none"
->
-  Log In
-</a>
 
-        
-        {/* This empty div maintains space balance on mobile */}
-        <div className="w-10 lg:hidden"></div>
+        {
+          user ? <button onClick={handleLogout} className="btn bg-[#83b541] hover:bg-[#6f9a37] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-3 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg shadow-none">Logout</button>:
+          <Link to="/login" className="btn bg-[#83b541] hover:bg-[#6f9a37] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-3 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg shadow-none">
+  Log In</Link>
+        }
+ 
       </div>
     </nav>
    )

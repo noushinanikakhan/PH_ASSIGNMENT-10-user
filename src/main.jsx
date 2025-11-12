@@ -12,6 +12,11 @@ import Login from './Components/Login/Login.jsx';
 import AuthProvider from './Context/AuthProvider.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddFoods from './Components/AddFoods/AddFoods.jsx';
+import ManageMyFoods from './Components/ManageMyFoods/ManageMyFoods.jsx';
+import MyFoodRequests from './Components/MyFoodRequests/MyFoodRequests.jsx';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute.jsx';
+import ErrorPage from './Components/ErrorPage/ErrorPage.jsx';
 
 
 
@@ -25,7 +30,7 @@ const router = createBrowserRouter([
       Component: Home
     },
     {
-      path: 'availalblefoods',
+      path: 'availablefoods',
       Component: AvailableFoods
     },
     {
@@ -35,9 +40,25 @@ const router = createBrowserRouter([
     {
       path: 'login',
       Component: Login
+    },
+    {
+      path: 'addfoods',
+      element: <PrivateRoute><AddFoods></AddFoods></PrivateRoute>
+    },
+    {
+      path: 'managemyfoods',
+      element: <PrivateRoute><ManageMyFoods></ManageMyFoods></PrivateRoute>
+    },
+    {
+      path: 'myfoodrequests',
+      element: <PrivateRoute><MyFoodRequests></MyFoodRequests></PrivateRoute>
     }
    ]
   },
+  {
+    path: "*",
+    Component: ErrorPage
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(

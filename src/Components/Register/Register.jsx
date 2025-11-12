@@ -2,10 +2,12 @@ import React, { use, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
  import 'react-toastify/dist/ReactToastify.css'; // Add this CSS import
+import { useNavigate } from "react-router";
 
 
 const Register = () => {
 
+     const navigate = useNavigate();
      const { createUser, updateUserProfile } = useContext (AuthContext);
     const [loading, setLoading] = useState (false);
     const [formData, setFormData] = useState({
@@ -76,6 +78,8 @@ const Register = () => {
                 photoURL: '',
                 password: ''
             });
+
+             navigate('/'); 
             
      } catch (error) {
     console.error('Registration error:', error);

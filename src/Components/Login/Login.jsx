@@ -1,6 +1,47 @@
-import React from "react";
+import React, { use, useState } from "react";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+
+   const { signInUser } = use(AuthContext);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            await signInUser(formData.email, formData.password);
+            toast.success('Login successful!');
+            navigate('/'); // Navigate to home page
+        } catch (error) {
+            console.error('Login error:', error);
+            toast.error('Login failed. Please check your email and password.');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    
+    
+    
+    
+    
+    
     return (
         <div className="min-h-screen bg-[#f7fcf5] flex items-center justify-center py-12">
             <div className="max-w-md w-full">
@@ -10,13 +51,15 @@ const Login = () => {
                         <p className="text-gray-600 mt-2">Log in to your PlateShare account</p>
                     </div>
 
-                    <form className="space-y-6">
+                    <form  onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-4">
                             {/* Email Field */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                                 <input 
-                                    type="email" 
+                                     name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#83b541] focus:border-transparent transition-all"
                                     placeholder="Enter your email"
                                     required
@@ -27,7 +70,10 @@ const Login = () => {
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
                                 <input 
-                                    type="password" 
+                                     type="password" 
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#83b541] focus:border-transparent transition-all"
                                     placeholder="Enter your password"
                                     required

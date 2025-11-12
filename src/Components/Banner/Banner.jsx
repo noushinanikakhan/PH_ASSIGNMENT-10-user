@@ -85,12 +85,12 @@ const Banner = () => {
                 View All Foods
               </a>
 
-              {/* <a
-                href="/search"
-                className="btn bg-[#0c2729] hover:bg-[#184c4f] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-base"
+              <a
+                href="/register"
+                className="btn bg-[#184c4f]  hover:bg-[#184c4f] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-base"
               >
-                Search Food
-              </a> */}
+                Register to join Food Community 
+              </a>
             </div>
           </div>
         </div>
