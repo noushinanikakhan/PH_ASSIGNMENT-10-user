@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const Register = () => {
 
      const navigate = useNavigate();
-     const { createUser, updateUserProfile } = useContext (AuthContext);
+     const { createUser, updateUserProfile, signInWithGoogle  } = useContext (AuthContext);
     const [loading, setLoading] = useState (false);
     const [formData, setFormData] = useState({
         name: '',
@@ -25,6 +25,26 @@ const Register = () => {
 
     // console.log('Form Data:', formData);
     // console.log('Loading state:', loading);
+
+      // Handle Google Sign In
+    const handleGoogleSignIn = async () => {
+        setLoading(true);
+        try {
+            const result = await signInWithGoogle();
+            console.log('Google sign in successful:', result);
+            toast.success('Google login successful!');
+            navigate('/');
+        } catch (error) {
+            console.error('Google sign in error:', error);
+            if (error.code === 'auth/popup-closed-by-user') {
+                toast.info('Google sign in was cancelled.');
+            } else {
+                toast.error('Google login failed. Please try again.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
 
     const handleChange = (e) => {
         console.log('Input changed:', e.target.name, e.target.value);
@@ -229,6 +249,7 @@ const Register = () => {
         {/* Google Login Button */}
         <button 
             type="button"
+            onClick={handleGoogleSignIn}
             className="w-full flex items-center justify-center gap-3 border border-gray-300 py-3 rounded-2xl font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-300"
         >
         <svg className="w-5 h-5" viewBox="0 0 24 24">

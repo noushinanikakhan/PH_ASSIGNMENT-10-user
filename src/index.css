@@ -7,18 +7,3 @@
   --color-secondary: teal;
 }
 
-/* Add this to your src/index.css file */
-/* .dropdown-hover:hover .dropdown-content {
-  animation: fadeIn 0.3s;
-  pointer-events: auto;
-}
-
-.dropdown-hover .dropdown-content {
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.dropdown-hover:hover .dropdown-content {
-  pointer-events: auto;
-  opacity: 1;
-} */

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 
-import errorImage from './../../assets/404-error.jpg'; // You can add your own image
+import errorImage from './../../assets/404-error.jpg'; 
 import { div } from 'framer-motion/client';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -21,7 +21,6 @@ const ErrorPage = () => {
                         className="w-full max-w-md mx-auto rounded-lg"
                     />
                 </div>
-
     
                     {/* Back to Home Button */}
                     <div className="pt-6">
@@ -32,11 +31,6 @@ const ErrorPage = () => {
                             Back to Home
                         </Link>
                     </div>
-
-                    {/* Optional: Fun message
-                    <p className="text-gray-500 text-sm mt-8">
-                        Don't worry, even the best chefs sometimes lose their recipes!
-                    </p> */}
                 </div>
             </div>
             <Footer></Footer>

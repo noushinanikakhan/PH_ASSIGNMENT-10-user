@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import hero1 from "./../../assets/hero1.jpg"; 
 import hero2 from "./../../assets/hero2.jpg";
 import hero3 from "./../../assets/hero3.jpg"; 
@@ -11,11 +11,15 @@ import { Autoplay, EffectFade } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";
+import { AuthContext } from "../../Context/AuthContext";
+import { Link } from "react-router";
 
 // Import your images
  const images = [hero1, hero2, hero3, hero4]; // Replace with actual images when you have them
 
 const Banner = () => {
+
+  const {user} = use(AuthContext)
   return (
     <section className="relative overflow-hidden  bg-[#f0f7e8] ">
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
@@ -85,12 +89,14 @@ const Banner = () => {
                 View All Foods
               </a>
 
-              <a
-                href="/register"
-                className="btn bg-[#184c4f]  hover:bg-[#184c4f] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-base"
-              >
-                Register to join Food Community 
-              </a>
+            {!user && (
+                <Link
+                  to="/register"
+                  className="btn bg-[#184c4f] hover:bg-[#0c2729] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-base flex items-center gap-2 group transition-all duration-300"
+                >
+                  Join Food Community
+                </Link>
+              )}
             </div>
           </div>
         </div>
