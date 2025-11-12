@@ -1,27 +1,63 @@
 import React from "react";
-// import heroBg from "./../../assets/hero-food.jpg"; // optional background
+import hero1 from "./../../assets/hero1.jpg"; 
+import hero2 from "./../../assets/hero2.jpg";
+import hero3 from "./../../assets/hero3.jpg"; 
+import hero4 from "./../../assets/herp4.jpg";  // optional background
+
+import {  Swiper, SwiperSlide } from "swiper/react";
+import { motion } from "framer-motion";
+import { Autoplay, EffectFade } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-fade";
+
+// Import your images
+ const images = [hero1, hero2, hero3, hero4]; // Replace with actual images when you have them
 
 const Banner = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden  bg-[#f0f7e8] ">
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
           {/* ===== Image Section - Now FIRST on mobile ===== */}
           <div className="order-1 lg:order-2"> {/* Changed to order-1 for mobile */}
             <div className="relative w-full h-72 sm:h-96 lg:h-[420px] flex justify-center items-center overflow-hidden rounded-3xl bg-gray-100">
               {/* 👉 You can replace this <img> later with animated images */}
-              <img
-                src=""
+     <Swiper
+                modules={[Autoplay, EffectFade]}
+                effect="fade"
+                autoplay={{ 
+                  delay: 2000,
+                  disableOnInteraction: false 
+                }}
+                loop={true}
+                speed={1000}
+                className="h-full w-full rounded-3xl"
+              >
+                {images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    <motion.img
+                      src={image}
+                      alt={`PlateShare hero image ${index + 1}`}
+                      className="h-full w-full object-cover"
+                      initial={{ opacity: 0, scale: 1.1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 1.5 }}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* <img
+                src={hero1}
                 alt="Banner visual placeholder"
                 className="h-full w-full object-cover"
-              />
+              /> */}
               {/* Optional overlay or gradient */}
               <div className="absolute inset-0 bg-black/5"></div>
 
-              {/* Label or small badge */}
-              <div className="absolute top-4 right-4 bg-[#0c2729] text-white text-xs px-3 py-1 rounded-full">
-                Image Area
-              </div>
+             
             </div>
           </div>
 
@@ -49,12 +85,12 @@ const Banner = () => {
                 View All Foods
               </a>
 
-              <a
+              {/* <a
                 href="/search"
                 className="btn bg-[#0c2729] hover:bg-[#184c4f] text-white border-0 outline-none focus:outline-none focus:ring-0 rounded-3xl px-8 text-base"
               >
                 Search Food
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
