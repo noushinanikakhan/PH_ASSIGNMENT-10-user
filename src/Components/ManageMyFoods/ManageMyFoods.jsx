@@ -15,7 +15,7 @@ const ManageMyFoods = () => {
     useEffect(() => {
         const fetchMyFoods = async () => {
             try {
-                const response = await fetch('http://localhost:3000/foods');
+                const response = await fetch('https://assignment10-plate-share-server.vercel.app');
                 const allFoods = await response.json();
                 
                 // Filter foods by current user's email
@@ -49,7 +49,7 @@ const handleDelete = async (foodId) => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                const response = await fetch(`http://localhost:3000/foods/${foodId}`, {
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${foodId}`, {
                     method: 'DELETE'
                 });
 
@@ -211,7 +211,7 @@ const UpdateFoodModal = ({ food, onClose, onUpdate }) => {
         setLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:3000/foods/${food._id}`, {
+            const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${food._id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

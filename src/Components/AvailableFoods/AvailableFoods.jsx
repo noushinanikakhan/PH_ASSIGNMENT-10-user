@@ -24,7 +24,7 @@ const AvailableFoods = () => {
     useEffect(() => {
         const fetchAvailableFoods = async () => {
             try {
-                const response = await fetch('http://localhost:3000/foods');
+                const response = await fetch('https://assignment10-plate-share-server.vercel.app');
                 const allFoods = await response.json();
                 
                 // Filter only available foods

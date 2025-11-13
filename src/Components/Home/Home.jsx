@@ -27,7 +27,7 @@ const Home = () => {
     useEffect(() => {
         const fetchFeaturedFoods = async () => {
             try {
-                const response = await fetch('http://localhost:3000/foods');
+                const response = await fetch('https://assignment10-plate-share-server.vercel.app');
                 const allFoods = await response.json();
                 
                 // Sort by quantity (extract number from "Serves X people")

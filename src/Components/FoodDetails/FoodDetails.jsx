@@ -67,7 +67,7 @@ const FoodDetails = () => {
             });
 
             // Update food status to donated
-            await fetch(`http://localhost:3000/foods/${id}`, {
+            await fetch(`https://assignment10-plate-share-server.vercel.app/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ foodStatus: 'donated' })
@@ -76,7 +76,7 @@ const FoodDetails = () => {
             // Refresh requests and food data
             fetchFoodRequests();
             // Refresh food details
-            const response = await fetch(`http://localhost:3000/foods/${id}`);
+            const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${id}`);
             const updatedFood = await response.json();
             setFood(updatedFood);
 
@@ -106,7 +106,7 @@ const FoodDetails = () => {
     useEffect(() => {
         const fetchFoodDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/foods/${id}`);
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${id}`);
                 const foodData = await response.json();
                 setFood(foodData);
             } catch (error) {

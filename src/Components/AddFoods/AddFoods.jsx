@@ -49,7 +49,7 @@ const handleSubmit = async (e) => {
         console.log('Sending food data:', foodData);
 
         // Make API call to save to MongoDB
-        const response = await fetch('http://localhost:3000/foods', {
+        const response = await fetch('https://assignment10-plate-share-server.vercel.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
