@@ -17,6 +17,7 @@ import ManageMyFoods from './Components/ManageMyFoods/ManageMyFoods.jsx';
 import MyFoodRequests from './Components/MyFoodRequests/MyFoodRequests.jsx';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute.jsx';
 import ErrorPage from './Components/ErrorPage/ErrorPage.jsx';
+import FoodDetails from './Components/FoodDetails/FoodDetails.jsx';
 
 
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
     {
       path: 'login',
       Component: Login
+    },
+    {
+      path: 'foods/:id',
+      element: <PrivateRoute><FoodDetails></FoodDetails></PrivateRoute>
     },
     {
       path: 'addfoods',

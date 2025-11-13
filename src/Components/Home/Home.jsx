@@ -1,14 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Banner from "../Banner/Banner";
 import HowItworks from "../Howitworks/Howitworks";
 import OurMission from "../OurMission/OurMission";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 
 const Home = () => {
 
     const [featuredFoods, setFeaturedFoods] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { user } = use(AuthContext);
+    const navigate = useNavigate();
+
+    // Handle View Details click
+    const handleViewDetails = (foodId) => {
+        if (user) {
+            // Logged in user - go to food details
+            navigate(`/foods/${foodId}`);
+        } else {
+            // Not logged in - go to registration
+            navigate('/register');
+        }
+          };
 
     useEffect(() => {
         const fetchFeaturedFoods = async () => {
@@ -58,11 +72,13 @@ const Home = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                                 {featuredFoods.map(food => (
                                     <div key={food._id} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
-                                        <img 
-                                            src={food.foodImage} 
-                                            alt={food.foodName}
-                                            className="w-full h-48 object-cover"
-                                        />
+                                                  <div className="p-4"> {/* Added padding wrapper for image */}
+                <img 
+                    src={food.foodImage} 
+                    alt={food.foodName}
+                    className="w-full h-48 object-cover rounded-xl" /* Added rounded corners */
+                />
+            </div>
                                         <div className="p-6">
                                             <h3 className="text-xl font-bold text-[#0c2729] mb-2">{food.foodName}</h3>
                                             
@@ -89,12 +105,12 @@ const Home = () => {
                                                 </p>
                                             </div>
                                             
-                                            <Link
-                                                to={`/foods/${food._id}`}
-                                                className="block w-full bg-[#83b541] hover:bg-[#6f9a37] text-white text-center py-2 rounded-xl font-semibold transition-all duration-300"
-                                            >
-                                                View Details
-                                            </Link>
+                                    <button
+    onClick={() => handleViewDetails(food._id)}
+    className="block w-full bg-[#83b541] hover:bg-[#6f9a37] text-white text-center py-2 rounded-xl font-semibold transition-all duration-300"
+>
+    View Details
+</button>
                                         </div>
                                     </div>
                                 ))}
