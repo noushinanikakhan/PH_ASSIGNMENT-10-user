@@ -21,10 +21,9 @@ const Login = () => {
         });
     }
 
-      // ADD THIS SUCCESS HANDLER
     const handleLoginSuccess = () => {
         toast.success('Login successful!');
-        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+        navigate(redirectPath || '/'); 
     };
 
     // Handle Google Sign In
@@ -33,7 +32,7 @@ const Login = () => {
         try {
             await signInWithGoogle();
             toast.success('Google login successful!');
-                   handleLoginSuccess(); // USE UPDATED FUNCTION
+                   handleLoginSuccess(); 
         } catch (error) {
             console.error('Google sign in error:', error);
             if (error.code === 'auth/popup-closed-by-user') {
@@ -53,7 +52,7 @@ const Login = () => {
         try {
             await signInUser(formData.email, formData.password);
             toast.success('Login successful!');
-             handleLoginSuccess(); // USE UPDATED FUNCTION
+             handleLoginSuccess(); 
         } catch (error) {
             console.error('Login error:', error);
             toast.error('Login failed. Please check your email and password.');

@@ -5,17 +5,16 @@ import { Navigate, useLocation } from 'react-router';
 const PrivateRoute = ({ children }) => {
     const { user, loading, setRedirect  } = use(AuthContext);
       const [showSpinner, setShowSpinner] = useState(true);
-          const location = useLocation(); // ADD THIS
+          const location = useLocation(); 
 
 
      useEffect(() => {
-        // If not loading, hide spinner immediately
+
         if (!loading) {
             setShowSpinner(false);
             return;
         }
-
-        // If loading, show spinner for at least 1 second for better UX
+   
         const timer = setTimeout(() => {
             setShowSpinner(false);
         }, 2000);
@@ -23,10 +22,10 @@ const PrivateRoute = ({ children }) => {
         return () => clearTimeout(timer);
     }, [loading]);
 
-       // ADD THIS useEffect TO SAVE REDIRECT PATH
+
     useEffect(() => {
         if (!loading && !user) {
-            console.log('PrivateRoute: Setting redirect to:', location.pathname);
+            // console.log('PrivateRoute: Setting redirect to:', location.pathname);
             setRedirect(location.pathname); // Save where user wanted to go
         }
     }, [loading, user, location.pathname, setRedirect]);

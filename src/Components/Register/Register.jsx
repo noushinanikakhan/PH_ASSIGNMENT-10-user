@@ -17,21 +17,14 @@ const Register = () => {
         password: ''
     });
 
-        // ADD THIS TEST HERE:
-    useEffect(() => {
-        toast.success("Test toast - is this working?");
-    }, []);
-
-
-  // UPDATE THESE SUCCESS HANDLERS
     const handleRegistrationSuccess = () => {
         toast.success('Account created successfully!');
-        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+        navigate(redirectPath || '/'); 
     };
 
     const handleGoogleSignInSuccess = () => {
         toast.success('Google login successful!');
-        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+        navigate(redirectPath || '/');
     };
 
     // Update your existing functions:
@@ -39,10 +32,9 @@ const Register = () => {
         setLoading(true);
         try {
             const result = await signInWithGoogle();
-            console.log('Google sign in successful:', result);
-            handleGoogleSignInSuccess(); // USE UPDATED FUNCTION
+            // console.log('Google sign in successful:', result);
+            handleGoogleSignInSuccess(); 
         } catch (error) {
-            // ... your existing error handling
       
             console.error('Google sign in error:', error);
             if (error.code === 'auth/popup-closed-by-user') {
@@ -56,7 +48,7 @@ const Register = () => {
     }
 
     const handleChange = (e) => {
-        console.log('Input changed:', e.target.name, e.target.value);
+        // console.log('Input changed:', e.target.name, e.target.value);
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -68,19 +60,19 @@ const Register = () => {
         const hasLowerCase = /[a-z]/.test(password);
         const hasMinLength = password.length >= 6;
         
-        console.log('Password validation:', { hasUpperCase, hasLowerCase, hasMinLength });
+        // console.log('Password validation:', { hasUpperCase, hasLowerCase, hasMinLength });
         return { hasUpperCase, hasLowerCase, hasMinLength, isValid: hasUpperCase && hasLowerCase && hasMinLength };
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        console.log('Form submitted with data:', formData);
+        // console.log('Form submitted with data:', formData);
 
         // Password validation
         const passwordValidation = validatePassword(formData.password);
         if (!passwordValidation.isValid) {
-            console.log('Password validation failed');
+            // console.log('Password validation failed');
             toast.error('Password must contain uppercase, lowercase letters and be at least 6 characters long');
             toast("Password must contain uppercase, lowercase letters and be at least 6 characters long")
             setLoading(false);
@@ -88,18 +80,18 @@ const Register = () => {
         }
 
         try {
-            console.log('Creating user with email:', formData.email);
+            // console.log('Creating user with email:', formData.email);
             // Create user with email and password
             const result = await createUser(formData.email, formData.password);
-            console.log('User created successfully:', result);
+            // console.log('User created successfully:', result);
             
-            console.log('Updating user profile with:', { name: formData.name, photoURL: formData.photoURL });
+            // console.log('Updating user profile with:', { name: formData.name, photoURL: formData.photoURL });
             // Update user profile with name and photo
             await updateUserProfile(formData.name, formData.photoURL);
-            console.log('User profile updated successfully');
+            // console.log('User profile updated successfully');
             
             toast.success('Account created successfully!');
-            console.log('Form reset - clearing all fields');
+            // console.log('Form reset - clearing all fields');
             // Reset form
             setFormData({
                 name: '',
@@ -108,7 +100,7 @@ const Register = () => {
                 password: ''
             });
 
-          handleRegistrationSuccess(); // USE UPDATED FUNCTION
+          handleRegistrationSuccess();
             
      } catch (error) {
     console.error('Registration error:', error);
@@ -220,7 +212,7 @@ const Register = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#83b541] focus:border-transparent transition-all"
                 placeholder="Create a secure password"
                 required   />
-                                                                   {/* Password Validation Requirements */}
+            {/* Password Validation Requirements */}
                   {formData.password && (
               <div className="mt-2 space-y-1">
            <p className="text-xs text-gray-600 font-medium">Password must contain:</p>

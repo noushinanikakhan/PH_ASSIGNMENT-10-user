@@ -46,7 +46,7 @@ const handleSubmit = async (e) => {
             createdAt: new Date()
         };
 
-        console.log('Sending food data:', foodData);
+        // console.log('Sending food data:', foodData);
 
         // Make API call to save to MongoDB
         const response = await fetch('https://assignment10-plate-share-server.vercel.app/foods', {

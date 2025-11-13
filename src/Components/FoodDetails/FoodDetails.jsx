@@ -40,7 +40,7 @@ const FoodDetails = () => {
         // console.log('Food request submitted successfully');
     };
 
-    // Fetch food requests for this food
+    // Fetch food requests 
     const fetchFoodRequests = async () => {
         if (user.email === food.donatorEmail) {
             setLoadingRequests(true);
@@ -80,7 +80,7 @@ const FoodDetails = () => {
             const updatedFood = await response.json();
             setFood(updatedFood);
 
-            // TODO: Add success toast
+      
         } catch (error) {
             console.error('Error accepting request:', error);
         }
@@ -97,7 +97,7 @@ const FoodDetails = () => {
 
             // Refresh requests
             fetchFoodRequests();
-            // TODO: Add success toast
+      
         } catch (error) {
             console.error('Error rejecting request:', error);
         }
@@ -119,7 +119,6 @@ const FoodDetails = () => {
         fetchFoodDetails();
     }, [id]);
 
-    // Fetch requests when food loads and user is the owner
     useEffect(() => {
         if (food && user.email === food.donatorEmail) {
             fetchFoodRequests();
@@ -170,61 +169,60 @@ const FoodDetails = () => {
                         />
                     </div>
 
-                    <div className="p-8">
-                        {/* Food Title */}
-                        <h1 className="text-3xl font-bold text-[#0c2729] mb-4">{food.foodName}</h1>
-
-                        {/* Food Details Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="font-semibold text-gray-700 mb-2">Quantity</h3>
-                                    <p className="text-lg">{food.foodQuantity}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-700 mb-2">Pickup Location</h3>
-                                    <p className="text-lg">{food.pickupLocation}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-700 mb-2">Expiry Date</h3>
-                                    <p className="text-lg">{new Date(food.expiredDateTime).toLocaleDateString()}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-700 mb-2">Status</h3>
-                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                                        food.foodStatus === 'available' 
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-gray-100 text-gray-800'
-                                    }`}>
-                                        {food.foodStatus}
+<div className="p-8">
+    {/* Food Title */}
+    <h1 className="text-3xl font-bold text-[#0c2729] mb-4">{food.foodName}</h1>
+    {/* Food Details Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="space-y-4">
+            <div>
+                <h3 className="font-semibold text-gray-700 mb-2">Quantity</h3>
+                <p className="text-lg">{food.foodQuantity}</p>
+            </div>
+            <div>
+                <h3 className="font-semibold text-gray-700 mb-2">Pickup Location</h3>
+                <p className="text-lg">{food.pickupLocation}</p>
+            </div>
+            <div>
+                <h3 className="font-semibold text-gray-700 mb-2">Expiry Date</h3>
+                <p className="text-lg">{new Date(food.expiredDateTime).toLocaleDateString()}</p>
+            </div>
+            <div>
+                <h3 className="font-semibold text-gray-700 mb-2">Status</h3>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    food.foodStatus === 'available' 
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-gray-100 text-gray-800'
+                }`}>
+                    {food.foodStatus}
                                     </span>
-                                </div>
-                            </div>
+        </div>
+   </div>
 
                             {/* Donator Info */}
-                            <div className="bg-gray-50 rounded-2xl p-6">
-                                <h3 className="font-semibold text-gray-700 mb-4">Shared By</h3>
-                                <div className="flex items-center gap-4">
-                                    <img 
-                                        src={food.donatorImage} 
-                                        alt={food.donatorName}
-                                        className="w-16 h-16 rounded-full object-cover border-2 border-[#83b541]"
-                                    />
-                                    <div>
-                                        <h4 className="font-semibold text-lg">{food.donatorName}</h4>
-                                        <p className="text-gray-600">{food.donatorEmail}</p>
-                                    </div>
+     <div className="bg-gray-50 rounded-2xl p-6">
+         <h3 className="font-semibold text-gray-700 mb-4">Shared By</h3>
+         <div className="flex items-center gap-4">
+             <img 
+                 src={food.donatorImage} 
+                 alt={food.donatorName}
+                 className="w-16 h-16 rounded-full object-cover border-2 border-[#83b541]"
+             />
+             <div>
+                 <h4 className="font-semibold text-lg">{food.donatorName}</h4>
+                 <p className="text-gray-600">{food.donatorEmail}</p>
+             </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Additional Notes */}
-                        {food.additionalNotes && (
-                            <div className="mb-8">
-                                <h3 className="font-semibold text-gray-700 mb-3">Additional Notes</h3>
-                                <p className="text-gray-600 leading-relaxed bg-gray-50 rounded-xl p-4">
-                                    {food.additionalNotes}
-                                </p>
+     {/* Additional Notes */}
+     {food.additionalNotes && (
+         <div className="mb-8">
+             <h3 className="font-semibold text-gray-700 mb-3">Additional Notes</h3>
+             <p className="text-gray-600 leading-relaxed bg-gray-50 rounded-xl p-4">
+                 {food.additionalNotes}
+             </p>
                             </div>
                         )}
 
