@@ -1,10 +1,12 @@
 import { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
 const PrivateRoute = ({ children }) => {
-    const { user, loading } = use(AuthContext);
+    const { user, loading, setRedirect  } = use(AuthContext);
       const [showSpinner, setShowSpinner] = useState(true);
+          const location = useLocation(); // ADD THIS
+
 
      useEffect(() => {
         // If not loading, hide spinner immediately
@@ -21,8 +23,13 @@ const PrivateRoute = ({ children }) => {
         return () => clearTimeout(timer);
     }, [loading]);
 
-        console.log('PrivateRoute - loading:', loading, 'user:', user); // Add this for debugging
-
+       // ADD THIS useEffect TO SAVE REDIRECT PATH
+    useEffect(() => {
+        if (!loading && !user) {
+            console.log('PrivateRoute: Setting redirect to:', location.pathname);
+            setRedirect(location.pathname); // Save where user wanted to go
+        }
+    }, [loading, user, location.pathname, setRedirect]);
 
     if (loading || showSpinner) {
         return <div className="flex justify-center items-center min-h-screen">

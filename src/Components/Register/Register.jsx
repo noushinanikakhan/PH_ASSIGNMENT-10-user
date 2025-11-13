@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const Register = () => {
 
      const navigate = useNavigate();
-     const { createUser, updateUserProfile, signInWithGoogle  } = useContext (AuthContext);
+     const { createUser, updateUserProfile, signInWithGoogle, redirectPath   } = useContext (AuthContext);
     const [loading, setLoading] = useState (false);
     const [formData, setFormData] = useState({
         name: '',
@@ -23,18 +23,27 @@ const Register = () => {
     }, []);
 
 
-    // console.log('Form Data:', formData);
-    // console.log('Loading state:', loading);
+  // UPDATE THESE SUCCESS HANDLERS
+    const handleRegistrationSuccess = () => {
+        toast.success('Account created successfully!');
+        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+    };
 
-      // Handle Google Sign In
+    const handleGoogleSignInSuccess = () => {
+        toast.success('Google login successful!');
+        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+    };
+
+    // Update your existing functions:
     const handleGoogleSignIn = async () => {
         setLoading(true);
         try {
             const result = await signInWithGoogle();
             console.log('Google sign in successful:', result);
-            toast.success('Google login successful!');
-            navigate('/');
+            handleGoogleSignInSuccess(); // USE UPDATED FUNCTION
         } catch (error) {
+            // ... your existing error handling
+      
             console.error('Google sign in error:', error);
             if (error.code === 'auth/popup-closed-by-user') {
                 toast.info('Google sign in was cancelled.');
@@ -99,7 +108,7 @@ const Register = () => {
                 password: ''
             });
 
-             navigate('/'); 
+          handleRegistrationSuccess(); // USE UPDATED FUNCTION
             
      } catch (error) {
     console.error('Registration error:', error);

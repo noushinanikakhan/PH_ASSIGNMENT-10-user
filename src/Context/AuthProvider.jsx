@@ -14,6 +14,13 @@ import { auth } from "../firebase.config";
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [redirectPath, setRedirectPath] = useState('/'); // ADD THIS LINE
+
+     // ADD THIS FUNCTION
+    const setRedirect = (path) => {
+        setRedirectPath(path);
+    };
+
 
       // Google Provider
     const googleProvider = new GoogleAuthProvider();
@@ -64,6 +71,8 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         loading,
+        redirectPath, // ADD THIS
+        setRedirect,  // ADD THIS - you need to create this function
         createUser,
         signInUser,
         signInWithGoogle, 

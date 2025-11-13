@@ -1,6 +1,6 @@
 # 🍽️ PlateShare - Community Food Sharing Platform
 
-**Live Site URL:** [https://plateshare.netlify.app](https://plateshare.netlify.app) *(Replace with your actual deployed URL)*
+**Live Site URL:** [Add your live site URL here after deployment]
 
 ## 🌟 About PlateShare
 
@@ -13,6 +13,8 @@ PlateShare is a full-stack MERN application that connects food donors with peopl
 - **📱 Real-time Food Management** - Donors can view, update, and manage their shared food items
 - **🤝 Food Request System** - Users can request available food with location and contact details
 - **🔄 Smart Status Tracking** - Automatic status updates from 'available' to 'donated' when food is claimed
+- **📊 Request Management** - Food owners can accept or reject incoming food requests
+
 
 ## 🛠️ Tech Stack
 
@@ -35,9 +37,34 @@ PlateShare is a full-stack MERN application that connects food donors with peopl
 - MongoDB Atlas account
 - Firebase project for authentication
 
-### Installation
+📁 Project Structure
+plateshare/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/    # Reusable components
+│   │   ├── contexts/      # Auth context
+│   │   ├── pages/         # Route components
+│   │   └── layouts/       # Layout components
+├── server/                # Express backend
+│   ├── models/           # Database models
+│   ├── routes/           # API routes
+│   └── middleware/       # Custom middleware
+└── README.md
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/plateshare.git
-   cd plateshare
+🤝 Contributing
+We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
+
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+👥 Authors
+Your Name - GitHub Profile
+
+🙏 Acknowledgments
+Firebase for authentication services
+
+MongoDB Atlas for database hosting
+
+Tailwind CSS for the styling framework
+
+React community for excellent documentation

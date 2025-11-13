@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
 
-   const { signInUser, signInWithGoogle  } = use(AuthContext);
+   const { signInUser, signInWithGoogle, redirectPath   } = use(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -21,13 +21,19 @@ const Login = () => {
         });
     }
 
+      // ADD THIS SUCCESS HANDLER
+    const handleLoginSuccess = () => {
+        toast.success('Login successful!');
+        navigate(redirectPath || '/'); // REDIRECT TO SAVED PATH
+    };
+
     // Handle Google Sign In
     const handleGoogleSignIn = async () => {
         setLoading(true);
         try {
             await signInWithGoogle();
             toast.success('Google login successful!');
-            navigate('/');
+                   handleLoginSuccess(); // USE UPDATED FUNCTION
         } catch (error) {
             console.error('Google sign in error:', error);
             if (error.code === 'auth/popup-closed-by-user') {
@@ -47,7 +53,7 @@ const Login = () => {
         try {
             await signInUser(formData.email, formData.password);
             toast.success('Login successful!');
-            navigate('/'); // Navigate to home page
+             handleLoginSuccess(); // USE UPDATED FUNCTION
         } catch (error) {
             console.error('Login error:', error);
             toast.error('Login failed. Please check your email and password.');
@@ -55,13 +61,7 @@ const Login = () => {
             setLoading(false);
         }
     }
-
-    
-    
-    
-    
-    
-    
+   
     return (
         <div className="min-h-screen bg-[#f7fcf5] flex items-center justify-center py-12">
             <div className="max-w-md w-full">

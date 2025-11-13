@@ -6,19 +6,20 @@ const AvailableFoods = () => {
 
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { user } = use(AuthContext);
+    const { user, setRedirect  } = use(AuthContext);
     const navigate = useNavigate();
 
-    // Handle View Details click
+      // Handle View Details click - UPDATED
     const handleViewDetails = (foodId) => {
         if (user) {
             // Logged in user - go to food details
             navigate(`/foods/${foodId}`);
         } else {
-            // Not logged in - go to registration
+            // Not logged in - set redirect and go to registration
+            setRedirect(`/foods/${foodId}`); // SAVE WHERE USER WANTS TO GO
             navigate('/register');
         }
-          };
+    };
 
     useEffect(() => {
         const fetchAvailableFoods = async () => {
