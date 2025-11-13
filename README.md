@@ -1,16 +1,43 @@
-# React + Vite
+# 🍽️ PlateShare - Community Food Sharing Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site URL:** [https://plateshare.netlify.app](https://plateshare.netlify.app) *(Replace with your actual deployed URL)*
 
-Currently, two official plugins are available:
+## 🌟 About PlateShare
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+PlateShare is a full-stack MERN application that connects food donors with people in need, reducing food waste while helping communities. Users can share surplus food, browse available meals, and request food items through a secure and user-friendly platform.
 
-## React Compiler
+## ✨ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **🔐 Secure Authentication** - Firebase-powered login system with social authentication options
+- **🍕 Food Sharing Made Easy** - Simple form to share surplus food with auto-filled donor information
+- **📱 Real-time Food Management** - Donors can view, update, and manage their shared food items
+- **🤝 Food Request System** - Users can request available food with location and contact details
+- **🔄 Smart Status Tracking** - Automatic status updates from 'available' to 'donated' when food is claimed
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend:**
+- React.js with React Router
+- Tailwind CSS for styling
+- Firebase Authentication
+- Context API for state management
+
+**Backend:**
+- Node.js with Express.js
+- MongoDB with Mongoose
+- RESTful API architecture
+- CORS enabled for cross-origin requests
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account
+- Firebase project for authentication
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/plateshare.git
+   cd plateshare
