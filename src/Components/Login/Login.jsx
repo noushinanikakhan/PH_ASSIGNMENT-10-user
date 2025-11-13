@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
 
-   const { signInUser, signInWithGoogle, redirectPath   } = use(AuthContext);
+   const { signInUser, signInWithGoogle, redirectPath, clearRedirect } = use(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -23,7 +23,10 @@ const Login = () => {
 
     const handleLoginSuccess = () => {
         toast.success('Login successful!');
-        navigate(redirectPath || '/'); 
+         console.log('Redirecting to:', redirectPath);
+        const targetPath = redirectPath || '/';
+        clearRedirect();
+        navigate(targetPath);
     };
 
     // Handle Google Sign In
@@ -31,7 +34,7 @@ const Login = () => {
         setLoading(true);
         try {
             await signInWithGoogle();
-            toast.success('Google login successful!');
+            // toast.success('Google login successful!');
                    handleLoginSuccess(); 
         } catch (error) {
             console.error('Google sign in error:', error);

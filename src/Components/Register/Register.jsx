@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const Register = () => {
 
      const navigate = useNavigate();
-     const { createUser, updateUserProfile, signInWithGoogle, redirectPath   } = useContext (AuthContext);
+     const { createUser, updateUserProfile, signInWithGoogle, redirectPath, clearRedirect    } = useContext (AuthContext);
     const [loading, setLoading] = useState (false);
     const [formData, setFormData] = useState({
         name: '',
@@ -19,12 +19,18 @@ const Register = () => {
 
     const handleRegistrationSuccess = () => {
         toast.success('Account created successfully!');
-        navigate(redirectPath || '/'); 
+        console.log('Redirecting to:', redirectPath);
+        const targetPath = redirectPath || '/';
+        clearRedirect();
+        navigate(targetPath);
     };
 
     const handleGoogleSignInSuccess = () => {
         toast.success('Google login successful!');
-        navigate(redirectPath || '/');
+        console.log('Redirecting to:', redirectPath);
+        const targetPath = redirectPath || '/';
+        clearRedirect();
+        navigate(targetPath);
     };
 
     // Update your existing functions:

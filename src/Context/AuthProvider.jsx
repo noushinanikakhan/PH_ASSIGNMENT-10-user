@@ -20,6 +20,11 @@ const AuthProvider = ({ children }) => {
         setRedirectPath(path);
     };
 
+    const clearRedirect = () => {
+        console.log('🔗 Clearing redirect path');
+        setRedirectPath('/');
+    };
+
 
       // Google Provider
     const googleProvider = new GoogleAuthProvider();
@@ -68,7 +73,8 @@ const AuthProvider = ({ children }) => {
         user,
         loading,
         redirectPath, 
-        setRedirect,  
+        setRedirect,
+        clearRedirect,  
         createUser,
         signInUser,
         signInWithGoogle, 
