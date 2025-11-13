@@ -14,9 +14,8 @@ import { auth } from "../firebase.config";
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [redirectPath, setRedirectPath] = useState('/'); // ADD THIS LINE
+    const [redirectPath, setRedirectPath] = useState('/'); 
 
-     // ADD THIS FUNCTION
     const setRedirect = (path) => {
         setRedirectPath(path);
     };
@@ -43,9 +42,6 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider);
     }
 
-    
-
-    // Update User Profile
     const updateUserProfile = (name, photoURL) => {
         return updateProfile(auth.currentUser, {
             displayName: name,
@@ -71,8 +67,8 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         loading,
-        redirectPath, // ADD THIS
-        setRedirect,  // ADD THIS - you need to create this function
+        redirectPath, 
+        setRedirect,  
         createUser,
         signInUser,
         signInWithGoogle, 

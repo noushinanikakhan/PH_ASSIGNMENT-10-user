@@ -15,7 +15,7 @@ const ManageMyFoods = () => {
     useEffect(() => {
         const fetchMyFoods = async () => {
             try {
-                const response = await fetch('https://assignment10-plate-share-server.vercel.app');
+                const response = await fetch('https://assignment10-plate-share-server.vercel.app/foods');
                 const allFoods = await response.json();
                 
                 // Filter foods by current user's email
@@ -49,31 +49,30 @@ const handleDelete = async (foodId) => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${foodId}`, {
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/foods/${foodId}`, {
                     method: 'DELETE'
                 });
-
-                if (response.ok) {
-                    // Remove from local state
-                    setFoods(foods.filter(food => food._id !== foodId));
-                    
-                    // Show success message
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your food has been deleted successfully.",
-                        icon: "success",
-                        confirmButtonColor: "#83b541"
-                    });
-                } else {
-                    throw new Error('Failed to delete food');
+    if (response.ok) {
+    // Remove from local state
+    setFoods(foods.filter(food => food._id !== foodId));
+    
+    // Show success message
+    Swal.fire({
+        title: "Deleted!",
+        text: "Your food has been deleted successfully.",
+        icon: "success",
+        confirmButtonColor: "#83b541"
+     });
+     } else {
+    throw new Error('Failed to delete food');
                 }
             } catch (error) {
-                console.error('Error deleting food:', error);
-                Swal.fire({
-                    title: "Error!",
-                    text: "Failed to delete food. Please try again.",
-                    icon: "error",
-                    confirmButtonColor: "#d33"
+    console.error('Error deleting food:', error);
+    Swal.fire({
+        title: "Error!",
+        text: "Failed to delete food. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#d33"
                 });
             }
         }
@@ -95,91 +94,41 @@ const handleDelete = async (foodId) => {
 
     return (
         <div className="min-h-screen bg-[#f7fcf5] py-12">
-            <div className="max-w-6xl mx-auto px-4">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-[#0c2729]">Manage My Foods</h1>
-                    <p className="text-gray-600 mt-2">View, update, or delete the foods you've shared</p>
+        <div className="max-w-6xl mx-auto px-4">
+            {/* Header */}
+            <div className="text-center mb-8">
+                <h1 className="text-3xl font-bold text-[#0c2729]">Manage My Foods</h1>
+                <p className="text-gray-600 mt-2">View, update, or delete the foods you've shared</p>
+            </div>
+            {foods.length === 0 ? (
+                <div className="text-center py-20">
+                    <div className="max-w-md mx-auto">
+                        <div className="text-6xl mb-4">🍽️</div>
+                        <h3 className="text-2xl font-bold text-[#0c2729] mb-2">No Foods Shared Yet</h3>
+                        <p className="text-gray-600 mb-6">You haven't shared any foods with the community yet.</p>
+                    </div>
                 </div>
-
-                {foods.length === 0 ? (
-                    <div className="text-center py-20">
-                        <div className="max-w-md mx-auto">
-                            <div className="text-6xl mb-4">🍽️</div>
-                            <h3 className="text-2xl font-bold text-[#0c2729] mb-2">No Foods Shared Yet</h3>
-                            <p className="text-gray-600 mb-6">You haven't shared any foods with the community yet.</p>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {foods.map(food => (<div key={food._id} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">    <div className="p-4">        <img             src={food.foodImage}             alt={food.foodName}            className="w-full h-48 object-cover rounded-xl"        />    </div>    <div className="p-6">        <h3 className="text-xl font-bold text-[#0c2729] mb-2">{food.foodName}</h3>                <div className="space-y-2 mb-4">            <p className="text-sm text-gray-600">                <span className="font-semibold">Quantity:</span> {food.foodQuantity}            </p>            <p className="text-sm text-gray-600">                <span className="font-semibold">Location:</span> {food.pickupLocation}            </p>            <p className="text-sm text-gray-600">                <span className="font-semibold">Expires:</span> {new Date(food.expiredDateTime).toLocaleDateString()}            </p>            <p className="text-sm">                <span className="font-semibold">Status:</span>                 <span className={`ml-1 px-2 py-1 rounded-full text-xs ${                    food.foodStatus === 'available'                         ? 'bg-green-100 text-green-800'                         : 'bg-gray-100 text-gray-800'                }`}>                    {food.foodStatus}                </span>            </p>        </div>                {/* Action Buttons */}        <div className="flex gap-2">            <button                onClick={() => handleUpdate(food)}                className="flex-1 bg-[#83b541] hover:bg-[#6f9a37] text-white py-2 rounded-xl font-semibold transition-all duration-300"            >                Update            </button>            <button                onClick={() => handleDelete(food._id)}                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl font-semibold transition-all duration-300"            >                Delete            </button>        </div>    </div>
                         </div>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {foods.map(food => (
-                            <div key={food._id} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                                <div className="p-4">
-                                    <img 
-                                        src={food.foodImage} 
-                                        alt={food.foodName}
-                                        className="w-full h-48 object-cover rounded-xl"
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-xl font-bold text-[#0c2729] mb-2">{food.foodName}</h3>
-                                    
-                                    <div className="space-y-2 mb-4">
-                                        <p className="text-sm text-gray-600">
-                                            <span className="font-semibold">Quantity:</span> {food.foodQuantity}
-                                        </p>
-                                        <p className="text-sm text-gray-600">
-                                            <span className="font-semibold">Location:</span> {food.pickupLocation}
-                                        </p>
-                                        <p className="text-sm text-gray-600">
-                                            <span className="font-semibold">Expires:</span> {new Date(food.expiredDateTime).toLocaleDateString()}
-                                        </p>
-                                        <p className="text-sm">
-                                            <span className="font-semibold">Status:</span> 
-                                            <span className={`ml-1 px-2 py-1 rounded-full text-xs ${
-                                                food.foodStatus === 'available' 
-                                                    ? 'bg-green-100 text-green-800' 
-                                                    : 'bg-gray-100 text-gray-800'
-                                            }`}>
-                                                {food.foodStatus}
-                                            </span>
-                                        </p>
-                                    </div>
-                                    
-                                    {/* Action Buttons */}
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => handleUpdate(food)}
-                                            className="flex-1 bg-[#83b541] hover:bg-[#6f9a37] text-white py-2 rounded-xl font-semibold transition-all duration-300"
-                                        >
-                                            Update
-                                        </button>
-                                        <button
-                                            onClick={() => handleDelete(food._id)}
-                                            className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl font-semibold transition-all duration-300"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    ))}
+                </div>
                 )}
 
                 {/* Update Modal */}
-                {showModal && selectedFood && (
-                    <UpdateFoodModal 
-                        food={selectedFood}
-                        onClose={() => setShowModal(false)}
-                        onUpdate={(updatedFood) => {
-                            // Update local state
-                            setFoods(foods.map(f => 
-                                f._id === updatedFood._id ? updatedFood : f
-                            ));
-                            setShowModal(false);
-                        }}
-                    />
+    {showModal && selectedFood && (
+        <UpdateFoodModal 
+            food={selectedFood}
+            onClose={() => setShowModal(false)}
+            onUpdate={(updatedFood) => {
+                // Update local state
+                setFoods(foods.map(f => 
+                    f._id === updatedFood._id ? updatedFood : f
+                ));
+                setShowModal(false);
+            }}
+        />
                 )}
             </div>
         </div>

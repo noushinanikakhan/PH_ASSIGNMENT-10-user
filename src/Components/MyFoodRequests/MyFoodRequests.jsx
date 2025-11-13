@@ -11,7 +11,7 @@ const MyFoodRequests = () => {
     useEffect(() => {
         const fetchMyFoodRequests = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/my-food-requests/${user.email}`);
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/my-food-requests/${user.email}`);
                 const requests = await response.json();
                 setFoodRequests(requests);
             } catch (error) {
@@ -106,7 +106,7 @@ const MyFoodRequestRow = ({ request }) => {
     useEffect(() => {
         const fetchFoodDetails = async () => {
             try {
-                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${request.foodId}`);
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/foods/${request.foodId}`);
                 const foodData = await response.json();
                 setFoodDetails(foodData);
             } catch (error) {

@@ -1,7 +1,7 @@
 import React, { use, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
- import 'react-toastify/dist/ReactToastify.css'; // Add this CSS import
+ import 'react-toastify/dist/ReactToastify.css'; 
 import { useNavigate } from "react-router";
 
 
@@ -140,8 +140,7 @@ const Register = () => {
                                 Join PlateShare
     </h1>
      <p className="text-lg text-gray-600 leading-relaxed">
- Become part of our food-sharing community and help reduce waste while feeding your neighbors. Together, we can create a sustainable future where no good food goes to waste.
-                            </p>
+ Become part of our food-sharing community and help reduce waste while feeding your neighbors. Together, we can create a sustainable future where no good food goes to waste. </p>
  </div>
                         
  <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
@@ -286,7 +285,6 @@ const Register = () => {
 
                   
         </div>
-    
-                                        )}
+        )}
 
 export default Register;

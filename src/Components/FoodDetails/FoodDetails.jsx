@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
+import { toast } from 'react-toastify';
 
 const FoodDetails = () => {
     const { id } = useParams();
@@ -25,7 +26,7 @@ const FoodDetails = () => {
             requestedAt: new Date()
         };
 
-        const response = await fetch('http://localhost:3000/food-requests', {
+        const response = await fetch('https://assignment10-plate-share-server.vercel.app/food-requests', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,8 +37,7 @@ const FoodDetails = () => {
         if (!response.ok) {
             throw new Error('Failed to submit request');
         }
-
-        console.log('Food request submitted successfully');
+        // console.log('Food request submitted successfully');
     };
 
     // Fetch food requests for this food
@@ -45,11 +45,11 @@ const FoodDetails = () => {
         if (user.email === food.donatorEmail) {
             setLoadingRequests(true);
             try {
-                const response = await fetch(`http://localhost:3000/food-requests/${id}`);
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/food-requests/${id}`);
                 const requests = await response.json();
                 setFoodRequests(requests);
             } catch (error) {
-                console.error('Error fetching food requests:', error);
+                // console.error('Error fetching food requests:', error);
             } finally {
                 setLoadingRequests(false);
             }
@@ -60,7 +60,7 @@ const FoodDetails = () => {
     const handleAcceptRequest = async (requestId) => {
         try {
             // Update request status to accepted
-            await fetch(`http://localhost:3000/food-requests/${requestId}`, {
+            await fetch(`https://assignment10-plate-share-server.vercel.app/food-requests/${requestId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'accepted' })
@@ -76,7 +76,7 @@ const FoodDetails = () => {
             // Refresh requests and food data
             fetchFoodRequests();
             // Refresh food details
-            const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${id}`);
+            const response = await fetch(`https://assignment10-plate-share-server.vercel.app/foods/${id}`);
             const updatedFood = await response.json();
             setFood(updatedFood);
 
@@ -89,7 +89,7 @@ const FoodDetails = () => {
     // Handle reject request
     const handleRejectRequest = async (requestId) => {
         try {
-            await fetch(`http://localhost:3000/food-requests/${requestId}`, {
+            await fetch(`https://assignment10-plate-share-server.vercel.app/food-requests/${requestId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'rejected' })
@@ -106,7 +106,7 @@ const FoodDetails = () => {
     useEffect(() => {
         const fetchFoodDetails = async () => {
             try {
-                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/${id}`);
+                const response = await fetch(`https://assignment10-plate-share-server.vercel.app/foods/${id}`);
                 const foodData = await response.json();
                 setFood(foodData);
             } catch (error) {
@@ -301,6 +301,7 @@ const RequestFoodModal = ({ show, onClose, onSubmit, foodId }) => {
         
         try {
             await onSubmit(formData);
+               toast.success('Your request has been submitted successfully!');
             onClose();
             // Reset form
             setFormData({
@@ -309,6 +310,7 @@ const RequestFoodModal = ({ show, onClose, onSubmit, foodId }) => {
                 contactNumber: ''
             });
         } catch (error) {
+             toast.error('Failed to submit request. Please try again.');
             console.error('Error submitting request:', error);
         } finally {
             setLoading(false);
@@ -319,94 +321,90 @@ const RequestFoodModal = ({ show, onClose, onSubmit, foodId }) => {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl shadow-xl max-w-md w-full">
-                <div className="p-6">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold text-[#0c2729]">Request Food</h2>
-                        <button
-                            onClick={onClose}
-                            className="text-gray-500 hover:text-gray-700 text-2xl"
-                        >
-                            ×
-                        </button>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {/* Location */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Pickup Location *
-                            </label>
-                            <input
-                                type="text"
-                                name="requestLocation"
-                                value={formData.requestLocation}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                                placeholder="Where will you pickup the food?"
-                            />
-                        </div>
-
-                        {/* Why Need Food */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Why Do You Need This Food? *
-                            </label>
-                            <textarea
-                                name="requestReason"
-                                value={formData.requestReason}
-                                onChange={handleInputChange}
-                                required
-                                rows="3"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                                placeholder="Please share why you need this food..."
-                            />
-                        </div>
-
-                        {/* Contact Number */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Contact Number *
-                            </label>
-                            <input
-                                type="text"
-                                name="contactNumber"
-                                value={formData.contactNumber}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                                placeholder="Your phone number for coordination"
-                            />
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex gap-3 pt-4">
-                            <button
-                                type="button"
-                                onClick={onClose}
-                                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-xl transition-all duration-300"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="flex-1 bg-[#83b541] hover:bg-[#6f9a37] text-white font-semibold py-3 rounded-xl transition-all duration-300 disabled:opacity-50"
-                            >
-                                {loading ? (
-                                    <span className="flex items-center justify-center">
-                                        <span className="loading loading-spinner loading-sm mr-2"></span>
-                                        Submitting...
-                                    </span>
-                                ) : (
-                                    'Submit Request'
-                                )}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div className="bg-white rounded-2xl shadow-xl max-w-md w-full">
+        <div className="p-6">
+<div className="flex justify-between items-center mb-6">
+    <h2 className="text-2xl font-bold text-[#0c2729]">Request Food</h2>
+    <button
+        onClick={onClose}
+        className="text-gray-500 hover:text-gray-700 text-2xl"
+    >
+        ×
+    </button>
+</div>
+<form onSubmit={handleSubmit} className="space-y-4">
+    {/* Location */}
+    <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+            Pickup Location *
+        </label>
+        <input
+            type="text"
+            name="requestLocation"
+            value={formData.requestLocation}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+            placeholder="Where will you pickup the food?"
+        />
+    </div>
+    {/* Why Need Food */}
+    <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+            Why Do You Need This Food? *
+        </label>
+        <textarea
+            name="requestReason"
+            value={formData.requestReason}
+            onChange={handleInputChange}
+            required
+            rows="3"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+            placeholder="Please share why you need this food..."
+        />
+    </div>
+    {/* Contact Number */}
+    <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+            Contact Number *
+        </label>
+        <input
+            type="text"
+            name="contactNumber"
+            value={formData.contactNumber}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+            placeholder="Your phone number for coordination"
+        />
+    </div>
+    {/* Action Buttons */}
+    <div className="flex gap-3 pt-4">
+        <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-xl transition-all duration-300"
+        >
+            Cancel
+        </button>
+        <button
+            type="submit"
+            disabled={loading}
+            className="flex-1 bg-[#83b541] hover:bg-[#6f9a37] text-white font-semibold py-3 rounded-xl transition-all duration-300 disabled:opacity-50"
+        >
+            {loading ? (
+                <span className="flex items-center justify-center">
+                    <span className="loading loading-spinner loading-sm mr-2"></span>
+                    Submitting...
+                </span>
+            ) : (
+                'Submit Request'
+            )}
+        </button>
+    </div>
+            </form>
+        </div>
+    </div>
         </div>
     );
 };
@@ -433,74 +431,74 @@ const FoodRequestsTable = ({ requests, loading, onAccept, onReject }) => {
 
     return (
         <div className="mt-12">
-            <h3 className="text-2xl font-bold text-[#0c2729] mb-6">Food Requests</h3>
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Requester
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Contact
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Location
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Reason
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Status
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {requests.map((request) => (
-                                <tr key={request._id}>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="flex items-center">
-                                            <img 
-                                                src={request.requesterImage} 
-                                                alt={request.requesterName}
-                                                className="w-8 h-8 rounded-full mr-3"
-                                            />
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    {request.requesterName}
-                                                </div>
-                                                <div className="text-sm text-gray-500">
-                                                    {request.requesterEmail}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {request.contactNumber}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {request.requestLocation}
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-900 max-w-xs">
-                                        <div className="truncate" title={request.requestReason}>
-                                            {request.requestReason}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                            request.status === 'pending' 
-                                                ? 'bg-yellow-100 text-yellow-800'
-                                                : request.status === 'accepted'
-                                                ? 'bg-green-100 text-green-800'
-                                                : 'bg-red-100 text-red-800'
-                                        }`}>
-                                            {request.status}
-                                        </span>
-                                    </td>
+    <h3 className="text-2xl font-bold text-[#0c2729] mb-6">Food Requests</h3>
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+<div className="overflow-x-auto">
+    <table className="w-full">
+<thead className="bg-gray-50">
+    <tr>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Requester
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Contact
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Location
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Reason
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Status
+        </th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Actions
+        </th>
+        </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+        {requests.map((request) => (
+<tr key={request._id}>
+    <td className="px-6 py-4 whitespace-nowrap">
+<div className="flex items-center">
+    <img 
+        src={request.requesterImage} 
+        alt={request.requesterName}
+        className="w-8 h-8 rounded-full mr-3"
+    />
+    <div>
+        <div className="text-sm font-medium text-gray-900">
+            {request.requesterName}
+        </div>
+        <div className="text-sm text-gray-500">
+            {request.requesterEmail}
+        </div>
+    </div>
+        </div>
+    </td>
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+        {request.contactNumber}
+    </td>
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+        {request.requestLocation}
+    </td>
+    <td className="px-6 py-4 text-sm text-gray-900 max-w-xs">
+        <div className="truncate" title={request.requestReason}>
+            {request.requestReason}
+        </div>
+    </td>
+    <td className="px-6 py-4 whitespace-nowrap">
+        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+            request.status === 'pending' 
+                ? 'bg-yellow-100 text-yellow-800'
+                : request.status === 'accepted'
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
+        }`}>
+            {request.status}
+        </span>
+            </td>
  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
   {request.status === 'pending' && (
       <div className="flex gap-2"> <button  onClick={() => onAccept(request._id)}

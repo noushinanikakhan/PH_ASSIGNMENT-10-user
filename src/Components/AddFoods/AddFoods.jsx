@@ -49,7 +49,7 @@ const handleSubmit = async (e) => {
         console.log('Sending food data:', foodData);
 
         // Make API call to save to MongoDB
-        const response = await fetch('https://assignment10-plate-share-server.vercel.app', {
+        const response = await fetch('https://assignment10-plate-share-server.vercel.app/foods', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,12 +62,9 @@ const handleSubmit = async (e) => {
         }
 
         const result = await response.json();
-        console.log('Food saved successfully:', result);
+        // console.log('Food saved successfully:', result);
+                toast.success('Food shared successfully!');
         
-        // TODO: Add success toast here
-        toast.success('Food shared successfully!');
-        
-        // Redirect to available foods page
         navigate('/availablefoods');
         
     } catch (error) {
@@ -91,7 +88,6 @@ const handleSubmit = async (e) => {
                 <div className="bg-white rounded-2xl shadow-lg p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
 
-                 {/* ✅ ADD THIS SECTION HERE - Auto-filled Donator Info Display */}
                         <div className="bg-gray-50 rounded-xl p-4 mb-2">
                             <h3 className="font-semibold text-gray-700 mb-2">Shared by You</h3>
                             <div className="flex items-center gap-3">
@@ -124,7 +120,6 @@ const handleSubmit = async (e) => {
                             />
                         </div>
 
-                        {/* Food Image - You'll implement imgbb upload here */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Food Image *
@@ -155,67 +150,65 @@ const handleSubmit = async (e) => {
     />
 </div>
 
-                        {/* Pickup Location */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Pickup Location *
-                            </label>
-                            <input
-                                type="text"
-                                name="pickupLocation"
-                                value={formData.pickupLocation}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                                placeholder="e.g., 123 Main St, City, State"
-                            />
-                        </div>
+                    {/* Pickup Location */}
+                    <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+        Pickup Location *
+    </label>
+    <input
+        type="text"
+        name="pickupLocation"
+        value={formData.pickupLocation}
+        onChange={handleInputChange}
+        required
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+        placeholder="e.g., 123 Main St, City, State"/>
+                    </div>
 
-                        {/* Expiry Date */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Expiry Date *
-                            </label>
-                            <input
-                                type="date"
-                                name="expiredDateTime"
-                                value={formData.expiredDateTime}
-                                onChange={handleInputChange}
-                                required
-                                min={new Date().toISOString().split('T')[0]}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                            />
-                        </div>
+                    {/* Expiry Date */}
+                    <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+        Expiry Date *
+    </label>
+    <input
+        type="date"
+        name="expiredDateTime"
+        value={formData.expiredDateTime}
+        onChange={handleInputChange}
+        required
+        min={new Date().toISOString().split('T')[0]}
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+                        />
+                    </div>
 
-                        {/* Additional Notes */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Additional Notes
-                            </label>
-                            <textarea
-                                name="additionalNotes"
-                                value={formData.additionalNotes}
-                                onChange={handleInputChange}
-                                rows="4"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
-                                placeholder="Any special instructions, ingredients, or notes about the food..."
-                            />
-                        </div>
+                    {/* Additional Notes */}
+    <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+            Additional Notes
+        </label>
+        <textarea
+            name="additionalNotes"
+            value={formData.additionalNotes}
+            onChange={handleInputChange}
+            rows="4"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#83b541] focus:border-transparent"
+            placeholder="Any special instructions, ingredients, or notes about the food..."
+        /> </div>
 
-                        {/* Submit Button */}
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-[#83b541] hover:bg-[#6f9a37] text-white font-semibold py-4 rounded-xl transition-all duration-300 disabled:opacity-50"
-                        >
-                            {loading ? (
-                                <span className="flex items-center justify-center">
-                                    <span className="loading loading-spinner loading-sm mr-2"></span>
-                                    Sharing Food...
-                                </span>
-                            ) : (
-                                'Share Food'
-                            )}
+                    {/* Submit Button */}
+ <button
+     type="submit"
+     disabled={loading}
+     className="w-full bg-[#83b541] hover:bg-[#6f9a37] text-white font-semibold py-4 rounded-xl transition-all duration-300 disabled:opacity-50"
+ >
+     {loading ? (
+         <span className="flex items-center justify-center">
+             <span className="loading loading-spinner loading-sm mr-2"></span>
+             Sharing Food...
+         </span>
+     ) : (
+         'Share Food'
+     )}
                         </button>
                     </form>
                 </div>
