@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 
 const ManageMyFoods = () => {
@@ -32,9 +33,21 @@ const ManageMyFoods = () => {
         }
     }, [user]);
 
-    // Delete food function
-    const handleDelete = async (foodId) => {
-        if (window.confirm('Are you sure you want to delete this food?')) {
+ // Delete food function with SweetAlert
+const handleDelete = async (foodId) => {
+    const foodToDelete = foods.find(food => food._id === foodId);
+    
+    Swal.fire({
+        title: "Are you sure?",
+        text: `You're about to delete "${foodToDelete?.foodName}". This action cannot be undone!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
             try {
                 const response = await fetch(`http://localhost:3000/foods/${foodId}`, {
                     method: 'DELETE'
@@ -43,15 +56,29 @@ const ManageMyFoods = () => {
                 if (response.ok) {
                     // Remove from local state
                     setFoods(foods.filter(food => food._id !== foodId));
-                    // TODO: Add success toast
+                    
+                    // Show success message
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your food has been deleted successfully.",
+                        icon: "success",
+                        confirmButtonColor: "#83b541"
+                    });
+                } else {
+                    throw new Error('Failed to delete food');
                 }
             } catch (error) {
                 console.error('Error deleting food:', error);
-                // TODO: Add error toast
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete food. Please try again.",
+                    icon: "error",
+                    confirmButtonColor: "#d33"
+                });
             }
         }
-    };
-
+    });
+};
     // Open update modal
     const handleUpdate = (food) => {
         setSelectedFood(food);
