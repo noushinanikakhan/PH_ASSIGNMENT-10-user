@@ -201,7 +201,21 @@ plateshare/
 
 ## 🔧 Available Scripts
 ### Frontend Scripts
+```bash
+bash
+npm start          # Start development server
+npm run build      # Create production build
+npm test           # Run test suite
+npm run eject      # Eject from Create React App
+```
+
 ### Backend Scripts
+```bash
+bash
+npm run dev        # Start development server with nodemon
+npm start          # Start production server
+npm test           # Run backend tests
+```
 
 ## 🗄️ API Endpoints
 ### Authentication
