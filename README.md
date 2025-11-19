@@ -58,7 +58,7 @@ We welcome contributions! Please feel free to submit pull requests, report bugs,
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 👥 Authors
-Your Name - GitHub Profile
+Name - noushinanikakhan
 
 🙏 Acknowledgments
 Firebase for authentication services
