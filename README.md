@@ -1,6 +1,6 @@
 # 🍽️ PlateShare - Community Food Sharing Platform
 
-**Live Site URL:** [Add your live site URL here after deployment]
+**Live Site URL:** (https://assignment-10-plateshare.web.app/)                                              
 
 ## 🌟 About PlateShare
 
